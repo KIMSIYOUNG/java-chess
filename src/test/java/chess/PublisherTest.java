@@ -41,7 +41,6 @@ public class PublisherTest {
 
 	@Test
 	void update() {
-
 		Publisher publisher = new BoardPublisher();
 		Observer pawn = new NotMovedPawnStrategy(publisher);
 		publisher.notifyToAll();

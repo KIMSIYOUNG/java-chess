@@ -6,12 +6,16 @@ import chess.Position;
 import java.util.*;
 
 public class BoardPublisher implements Publisher {
-    private final Map<Position, Piece> board;
+    private Map<Position, Piece> board;
     private final List<Observer> observers;
 
     public BoardPublisher() {
-        this.board = new HashMap<>();
         this.observers = new ArrayList<>();
+    }
+
+    void setBoard() {
+        this.board = BoardFactory.create(this);
+        notifyToAll();
     }
 
     @Override
