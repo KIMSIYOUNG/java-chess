@@ -6,6 +6,8 @@ public interface Publisher {
 
 	void delete(Observer observer);
 
-	void notify(Observer observer);
+	void notifyToAll();
+
+	void notifySpecificObserver(Observer observer);
 
 }
