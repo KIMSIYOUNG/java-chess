@@ -1,16 +1,16 @@
-package publisher;
+package chess.publisher;
 
 import chess.piece.Piece;
-import chess.position.Position;
+import chess.Position;
 
 import java.util.*;
 
-public class Board implements Publisher {
+public class BoardPublisher implements Publisher {
     private final Map<Position, Piece> board;
     private final List<Observer> observers;
 
-    public Board(Map<Position, Piece> board) {
-        this.board = board;
+    public BoardPublisher() {
+        this.board = new HashMap<>();
         this.observers = new ArrayList<>();
     }
 

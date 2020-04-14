@@ -1,4 +1,4 @@
-package publisher;
+package chess.publisher;
 
 
 public interface Publisher {

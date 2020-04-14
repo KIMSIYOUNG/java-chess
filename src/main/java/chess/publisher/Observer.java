@@ -1,7 +1,7 @@
-package publisher;
+package chess.publisher;
 
 import chess.piece.Piece;
-import chess.position.Position;
+import chess.Position;
 
 import java.util.Map;
 

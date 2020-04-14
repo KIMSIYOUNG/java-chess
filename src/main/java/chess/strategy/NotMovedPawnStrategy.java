@@ -1,11 +1,10 @@
-package strategy;
+package chess.strategy;
 
 import chess.piece.Piece;
-import chess.position.Position;
-import publisher.MoveStrategy;
-import publisher.Publisher;
+import chess.Position;
+import chess.publisher.MoveStrategy;
+import chess.publisher.Publisher;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class NotMovedPawnStrategy implements MoveStrategy {
