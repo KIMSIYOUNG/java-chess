@@ -9,7 +9,7 @@ class BoardFactoryTest {
 	@Test
 	void create() {
 		BoardPublisher boardPublisher = new BoardPublisher();
-		boardPublisher.setBoard();
+
 
 		assertThat(boardPublisher.getObservers()).hasSize(1);
 	}

@@ -1,4 +1,4 @@
 package chess.publisher;
 
-public interface MoveStrategy extends Observer{
+public interface MoveStrategy{
 }

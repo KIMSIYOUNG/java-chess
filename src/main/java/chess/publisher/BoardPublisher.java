@@ -2,48 +2,53 @@ package chess.publisher;
 
 import chess.piece.Piece;
 import chess.Position;
+import chess.piece.PieceType;
+import chess.strategy.NotMovedPawnStrategy;
 
 import java.util.*;
 
 public class BoardPublisher implements Publisher {
-    private Map<Position, Piece> board;
-    private final List<Observer> observers;
+	private Map<Position, Piece> board;
+	private final List<Observer> observers;
 
-    public BoardPublisher() {
-        this.observers = new ArrayList<>();
-    }
+	public BoardPublisher() {
+		this.observers = new ArrayList<>();
+		this.board = new HashMap<>();
+		init();
+	}
 
-    void setBoard() {
-        this.board = BoardFactory.create(this);
-        notifyToAll();
-    }
+	private void init() {
+		board.put(Position.of("a2"), new Piece(this, PieceType.PAWN, new NotMovedPawnStrategy()));
+		board.put(Position.of("a2"), new Piece(this, PieceType.PAWN, new NotMovedPawnStrategy()));
+		notifyToAll();
+	}
 
-    @Override
-    public void add(Observer moveStrategy) {
-        observers.add(moveStrategy);
-    }
+	@Override
+	public void add(Observer piece) {
+		observers.add(piece);
+	}
 
-    @Override
-    public void delete(Observer observer) {
+	@Override
+	public void delete(Observer observer) {
 
-    }
+	}
 
-    @Override
-    public void notifyToAll() {
-        for (Observer observer : observers) {
-            observer.update(board);
-        }
-    }
-
-    @Override
-    public void notifySpecificObserver(Observer observer) {
-    	if(!observers.contains(observer)){
-    		throw new IllegalArgumentException("sex");
+	@Override
+	public void notifyToAll() {
+		for (Observer observer : observers) {
+			observer.update(board);
 		}
-    	observer.update(board);
-    }
+	}
 
-    public List<Observer> getObservers() {
-        return Collections.unmodifiableList(observers);
-    }
+	@Override
+	public void notifySpecificObserver(Observer observer) {
+		if (!observers.contains(observer)) {
+			throw new IllegalArgumentException("sex");
+		}
+		observer.update(board);
+	}
+
+	public List<Observer> getObservers() {
+		return Collections.unmodifiableList(observers);
+	}
 }
