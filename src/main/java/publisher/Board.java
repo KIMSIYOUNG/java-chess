@@ -1,13 +1,32 @@
 package publisher;
 
-import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.util.function.DoublePredicate;
-import java.util.function.IntPredicate;
-import java.util.function.LongPredicate;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Board implements Publisher {
+	private final List<Observer> observers;
+
+	public Board() {
+		this.observers = new ArrayList<>();
+	}
+
+	@Override
+	public void add(Observer moveStrategy) {
+		observers.add(moveStrategy);
+	}
+
+	@Override
+	public void delete(Observer observer) {
+
+	}
+
+	@Override
+	public void notify(Observer observer) {
+
+	}
+
+	public List<Observer> getObservers() {
+		return Collections.unmodifiableList(observers);
+	}
 }
