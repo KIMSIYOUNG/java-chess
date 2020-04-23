@@ -10,25 +10,26 @@ import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
+import chess.dto.BoardDto;
 
 public class BoardFactory {
-	public static Board create(List<BoardMapper> mappers) {
+	public static Board create(List<BoardDto> mappers) {
 		Map<Position, Piece> board = new TreeMap<>();
-		for (BoardMapper mapper : mappers) {
+		for (BoardDto mapper : mappers) {
 			board.put(Position.of(mapper.piecePosition()),
 				PieceFactory.of(mapper.pieceName(), mapper.pieceTeam(), mapper.piecePosition()));
 		}
 		return new Board(board);
 	}
 
-	public static List<BoardMapper> createMappers(Board board) {
+	public static List<BoardDto> createMappers(Board board) {
 		List<Object> pieces = new ArrayList<>();
 		return board.getBoard().entrySet()
 			.stream()
 			.map(entry -> {
 				Position key = entry.getKey();
 				Piece value = entry.getValue();
-				return new BoardMapper(value.getSymbol(), value.getTeam().name(), key.getName());
+				return new BoardDto(value.getSymbol(), value.getTeam().name(), key.getName());
 			})
 			.collect(Collectors.toList());
 	}

@@ -22,12 +22,13 @@ public class RoomDao {
 		}
 	}
 
-	public int create(int playerId) throws SQLException, ClassNotFoundException {
-		String query = "insert into room(turn, player1_id, player2_id) value (?, ?, null)";
+	public int create(int player1Id, int player2Id) throws SQLException, ClassNotFoundException {
+		String query = "insert into room(turn, player1_id, player2_id) value (?, ?, ?)";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query,
             PreparedStatement.RETURN_GENERATED_KEYS)) {
-			pstmt.setInt(1, playerId);
-			pstmt.setInt(2, playerId);
+			pstmt.setInt(1, player1Id);
+			pstmt.setInt(2, player1Id);
+			pstmt.setInt(3, player2Id);
 			pstmt.executeUpdate();
 			return getId(pstmt);
 		}
@@ -40,6 +41,30 @@ public class RoomDao {
 				return rs.getInt(1);
 			}
 			throw new IllegalArgumentException();
+		}
+	}
+
+	public void updateTurn(int roomId) throws SQLException, ClassNotFoundException {
+		String query = "";
+		if (findTurnPlayerId(roomId) == findFirstPlayerId(roomId)) {
+			query = "update room set turn = player2_id where room_id = (?)";
+		} else {
+			query = "update room set turn = player1_id where room_id = (?)";
+		}
+		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
+			pstmt.setInt(1, roomId);
+			pstmt.executeUpdate();
+		}
+	}
+	private int findFirstPlayerId(int roomId) throws SQLException, ClassNotFoundException {
+		String query = "select player1_id from room where room_id = (?)";
+		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
+			pstmt.setInt(1, roomId);
+			ResultSet resultSet = pstmt.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+			throw new IllegalAccessError();
 		}
 	}
 }

@@ -24,12 +24,13 @@ public class PlayerDao {
 		}
 	}
 
-	public int create(String name, String password) throws SQLException, ClassNotFoundException {
-		String query = "insert into player(name, password, team) value (?, ?, 'WHITE')";
+	public int create(String name, String password, String team) throws SQLException, ClassNotFoundException {
+		String query = "insert into player(name, password, team) value (?, ?, ?)";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query,
 			PreparedStatement.RETURN_GENERATED_KEYS)) {
 			pstmt.setString(1, name);
 			pstmt.setString(2, password);
+			pstmt.setString(3, team);
 			pstmt.executeUpdate();
 			return getId(pstmt);
 		}

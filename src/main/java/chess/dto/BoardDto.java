@@ -1,11 +1,11 @@
-package chess.dao;
+package chess.dto;
 
-public class BoardMapper {
+public class BoardDto {
 	private final String piece_name;
 	private final String piece_team;
 	private final String piece_position;
 
-	public BoardMapper(String piece_name, String piece_team, String piece_position) {
+	public BoardDto(String piece_name, String piece_team, String piece_position) {
 		this.piece_name = piece_name;
 		this.piece_team = piece_team;
 		this.piece_position = piece_position;

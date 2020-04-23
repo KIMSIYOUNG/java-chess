@@ -10,11 +10,11 @@ import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ConsoleController {
 	private ChessGame game;
 	private Map<String, Consumer<StringTokenizer>> commands;
 
-	public ChessController(ChessGame game) {
+	public ConsoleController(ChessGame game) {
 		this.game = game;
 		this.commands = new HashMap<String, Consumer<StringTokenizer>>() {{
 			put("start", tokenizer -> {
