@@ -4,9 +4,9 @@ import java.util.TreeMap;
 
 import chess.domain.Board;
 import chess.domain.Team;
-import chess.domain.piece.blank.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
+import chess.domain.piece.blank.Blank;
 import chess.domain.piece.king.King;
 import chess.domain.piece.knight.Knight;
 import chess.domain.piece.pawn.Pawn;
@@ -14,7 +14,7 @@ import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
 import chess.domain.position.Position;
 
-public class BoardRepository {
+public class BoardFactory {
 	private static final String BLACK_PAWN = "2";
 	private static final String WHITE_PAWN = "7";
 

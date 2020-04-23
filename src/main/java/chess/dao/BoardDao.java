@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.Board;
+import chess.dto.BoardDto;
 
 public class BoardDao {
 
 	public Board create(int roomId, Board board) throws SQLException, ClassNotFoundException {
-		List<BoardMapper> mappers = BoardFactory.createMappers(board);
+		List<BoardDto> mappers = BoardMapper.createBoardDto(board);
 		String query = "insert into board(room_id, piece_name, piece_team, piece_position) values (?,?,?,?)";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
-			for (BoardMapper mapper : mappers) {
+			for (BoardDto mapper : mappers) {
 				pstmt.setInt(1, roomId);
 				pstmt.setString(2, mapper.pieceName());
 				pstmt.setString(3, mapper.pieceTeam());
@@ -31,7 +32,13 @@ public class BoardDao {
 		String query = "select * from board where room_id = (?)";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
 			pstmt.setInt(1, roomId);
-			return createResult(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				List<BoardDto> mappers = new ArrayList<>();
+				while (rs.next()) {
+					mappers.add(new BoardDto(rs.getString(2), rs.getString(3), rs.getString(4)));
+				}
+				return BoardMapper.createBoard(mappers);
+			}
 		}
 	}
 
@@ -42,20 +49,6 @@ public class BoardDao {
 			pstmt.setInt(2, roomId);
 			pstmt.setString(3, from);
 			pstmt.executeUpdate();
-		}
-	}
-
-
-
-	private Board createResult(PreparedStatement pstmt) throws SQLException {
-		try (ResultSet rs = pstmt.executeQuery()) {
-			List<BoardMapper> mappers = new ArrayList<>();
-			while (rs.next()) {
-				mappers.add(new BoardMapper(rs.getString(2), rs.getString(3), rs.getString(4)));
-			}
-			System.out.println(BoardFactory.create(mappers));
-			System.out.println("===============보드찾기성공");
-			return BoardFactory.create(mappers);
 		}
 	}
 }

@@ -1,25 +1,35 @@
 package chess.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import chess.domain.Board;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import chess.domain.position.Position;
+import chess.dto.BoardDto;
+
 public class BoardMapper {
-	private final String piece_name;
-	private final String piece_team;
-	private final String piece_position;
-
-	public BoardMapper(String piece_name, String piece_team, String piece_position) {
-		this.piece_name = piece_name;
-		this.piece_team = piece_team;
-		this.piece_position = piece_position;
+	public static Board createBoard(List<BoardDto> mappers) {
+		Map<Position, Piece> board = new TreeMap<>();
+		for (BoardDto mapper : mappers) {
+			board.put(Position.of(mapper.piecePosition()),
+				PieceFactory.of(mapper.pieceName(), mapper.pieceTeam(), mapper.piecePosition()));
+		}
+		return new Board(board);
 	}
 
-	public String pieceName() {
-		return piece_name;
-	}
-
-	public String pieceTeam() {
-		return piece_team;
-	}
-
-	public String piecePosition() {
-		return piece_position;
+	public static List<BoardDto> createBoardDto(Board board) {
+		return board.getBoard().entrySet()
+			.stream()
+			.map(entry -> {
+				Position key = entry.getKey();
+				Piece value = entry.getValue();
+				return new BoardDto(value.getSymbol(), value.getTeam().name(), key.getName());
+			})
+			.collect(Collectors.toList());
 	}
 }

@@ -20,6 +20,7 @@ public class ConnectionLoader {
 			System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
 			throw new ClassNotFoundException("데이터베이스에 연결할 수 없습니다.");
 		}
+
 		try {
 			con = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DB_NAME + OPTION, NAME, PASSWORD);
 		} catch (SQLException e) {
