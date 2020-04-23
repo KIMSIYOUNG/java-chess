@@ -35,15 +35,17 @@ public class BoardDao {
 		}
 	}
 
-	public Board updateBoard(int roomId, String from, String to) throws SQLException, ClassNotFoundException {
+	public void updateBoard(int roomId, String from, String to) throws SQLException, ClassNotFoundException {
 		String query = "update board set piece_position = ? where room_id =? and piece_position = ?";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
 			pstmt.setString(1, to);
 			pstmt.setInt(2, roomId);
 			pstmt.setString(3, from);
-			return createResult(pstmt);
+			pstmt.executeUpdate();
 		}
 	}
+
+
 
 	private Board createResult(PreparedStatement pstmt) throws SQLException {
 		try (ResultSet rs = pstmt.executeQuery()) {
