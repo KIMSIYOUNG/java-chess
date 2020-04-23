@@ -69,12 +69,12 @@ public class BoardController {
 		try {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("id", request.params(":id"));
+			boardService.create(Integer.parseInt(request.params(":id")));
 			return render(model, "playingGame.html");
 		} catch (Exception e) {
 			response.status(500);
 			return gson.toJson(e.getMessage());
 		}
-
 	}
 
 	//    private String games(Request request, Response response) {

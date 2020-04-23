@@ -9,15 +9,15 @@ import java.sql.SQLException;
 
 public class RoomDao {
 	public int findTurnPlayerId(int roomId) throws SQLException, ClassNotFoundException {
-		String query = "select turn from room where room_id = ?";
-		try (Connection con = ConnectionLoader.load();
-			 PreparedStatement pstmt = con.prepareStatement(query)) {
+		String query = "select turn from room where room_id = (?)";
+		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
 			pstmt.setInt(1, roomId);
 			try (ResultSet rs = pstmt.executeQuery()) {
-				if (!rs.next()) {
-					throw new IllegalArgumentException("Turn이 잘못되었습니다.");
+				if (rs.next()) {
+					System.out.println("ROOM ID 반환 성공 =============");
+					return rs.getInt(1);
 				}
-				return rs.getInt("turn");
+				throw new IllegalArgumentException("Turn이 잘못되었습니다.");
 			}
 		}
 	}

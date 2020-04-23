@@ -5,6 +5,7 @@ import chess.dao.*;
 import chess.domain.Board;
 import chess.domain.Turn;
 import chess.domain.position.Position;
+import chess.domain.state.BoardRepository;
 import chess.domain.state.Playing;
 import chess.dto.TurnDto;
 import chess.dto.GameDto;
@@ -26,6 +27,11 @@ public class BoardService {
 //        ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 //        return new TurnDto(game.turn());
 //    }
+
+    public Board create(int roomId) throws SQLException, ClassNotFoundException {
+        Board board = boardDao.create(roomId, BoardRepository.create());
+        return board;
+    }
 
     public GameDto load(int roomId) throws SQLException, ClassNotFoundException {
         Board board = boardDao.findByRoomId(roomId);
