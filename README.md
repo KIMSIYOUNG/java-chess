@@ -19,9 +19,9 @@
    - Piece마다 다르게 움직이는 부분을 Enum을 활용하여 해결
       ```java
       public enum Direction {
-      	NORTH(0, 1),
-      	NORTHEAST(1, 1),
-      	EAST(1, 0),
+        NORTH(0, 1),
+        NORTHEAST(1, 1),
+        EAST(1, 0),
         SOUTHEAST(1, -1),
         SOUTH(0, -1),
         SOUTHWEST(-1, -1),
